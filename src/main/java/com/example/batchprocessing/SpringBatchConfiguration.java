@@ -30,7 +30,7 @@ public class SpringBatchConfiguration {
                    ItemWriter<DailyInform> itemWriter) {
 
         Step step = stepBuilderFactory.get("ETL-file-load")
-                .<DailyInform, DailyInform>chunk(100)
+                .<DailyInform, DailyInform>chunk(1000)
                 .reader(itemReader)
                 .faultTolerant()
                 .skipPolicy(new FileVerificationSkipper())
