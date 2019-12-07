@@ -15,7 +15,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @SpringBootApplication
-public class BatchProcessingApplication implements CommandLineRunner {
+public class BatchProcessingApplication {
 
     @Bean
     public CNPJFormatter cnpjFormatter() {
@@ -32,11 +32,11 @@ public class BatchProcessingApplication implements CommandLineRunner {
         SpringApplication.run(BatchProcessingApplication.class, args);
     }
 
-    @Override
-    public void run(String... args) throws Exception {
-        Map<String, JobParameter> maps =  new HashMap<>();
-        maps.put("time", new JobParameter(System.currentTimeMillis()));
-        JobParameters parameters = new JobParameters(maps);
-        jobLauncher.run(job, parameters);
-    }
+//    @Override
+//    public void run(String... args) throws Exception {
+////        Map<String, JobParameter> maps =  new HashMap<>();
+////        maps.put("time", new JobParameter(System.currentTimeMillis()));
+////        JobParameters parameters = new JobParameters(maps);
+////        jobLauncher.run(job, parameters);
+//    }
 }
