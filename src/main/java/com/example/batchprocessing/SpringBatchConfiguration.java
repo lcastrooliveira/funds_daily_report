@@ -17,11 +17,18 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
+import org.springframework.core.task.SimpleAsyncTaskExecutor;
+import org.springframework.core.task.TaskExecutor;
 
 
 @Configuration
 @EnableBatchProcessing
 public class SpringBatchConfiguration {
+
+    @Bean
+    public TaskExecutor taskExecutor(){
+        return new SimpleAsyncTaskExecutor("spring_batch");
+    }
 
     @Bean
     public Job job(JobBuilderFactory jobBuilderFactory, StepBuilderFactory stepBuilderFactory,
@@ -36,6 +43,7 @@ public class SpringBatchConfiguration {
                 .skipPolicy(new FileVerificationSkipper())
                 .processor(itemProcessor)
                 .writer(itemWriter)
+                .taskExecutor(taskExecutor())
                 .build();
 
         return jobBuilderFactory.get("ETL-Load")
